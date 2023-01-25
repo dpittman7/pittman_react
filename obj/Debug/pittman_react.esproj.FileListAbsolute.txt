@@ -1,0 +1,4 @@
+C:\Users\PC\source\repos\pittman_react\pittman_react\obj\Debug\pittman_react.esproj.SuggestedBindingRedirects.cache
+C:\Users\PC\source\repos\pittman_react\pittman_react\obj\Debug\pittman_react.esproj.CoreCompileInputs.cache
+C:\Users\PC\source\repos\pittman_portfolio\pittman_react\obj\Debug\pittman_react.esproj.SuggestedBindingRedirects.cache
+C:\Users\PC\source\repos\pittman_portfolio\pittman_react\obj\Debug\pittman_react.esproj.CoreCompileInputs.cache
