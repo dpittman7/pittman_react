@@ -3,7 +3,7 @@ import React, { Component, Suspense, useRef, useState, Fragment, useEffect } fro
 import { useMediaQuery } from 'react-responsive';
 import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF, useAnimations, Text, Text3D, Html, useProgress } from '@react-three/drei'
-import { Model } from './Magic_furball'
+import { Model } from './Flaming_orb.js'
 import fontUrl from '../images/Bebas_Neue_Regular.json'
 import About from './About'
 import {
@@ -134,7 +134,7 @@ export class Home extends Component {
                         <Suspense fallback={<Loader />}>
                             <ambientLight intensity={1} />
                             <directionalLight position={[-5, 5, 5]} castShadow shadow-mapSize={1024} />
-                            <Model play='Animation' position={[1, 2.2, 1]} />
+                            <Model play='Animation' position={[1, 2.5, 0.5]} />
                             <Text
 
                                 color="black" // default

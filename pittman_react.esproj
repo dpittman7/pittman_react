@@ -17,4 +17,7 @@
   <ItemGroup>
     <None Remove="public\models\flaming_orb.glb" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="public\models\flaming_orb-transformed.glb" />
+  </ItemGroup>
 </Project>
