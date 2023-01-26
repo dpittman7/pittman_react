@@ -25,3 +25,4 @@ yarn-error.log*
 /public/models/helix_wave3.glb
 /public/models/incandescent_helix.glb
 *.glb
+/public/models/flaming_orb.glb
