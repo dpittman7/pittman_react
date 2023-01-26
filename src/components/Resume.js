@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';
+import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack'
 import DPResume from '../images/resume/PittmanDeanta_Resume_Jan2023.pdf'
 
+const url = `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
+pdfjs.GlobalWorkerOptions.workerSrc = url
 
 
 export class Resume extends Component {
-
-
-    
-
     render()
     {
         return (
