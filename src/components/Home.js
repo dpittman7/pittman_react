@@ -8,7 +8,7 @@ import fontUrl from '../images/Bebas_Neue_Regular.json'
 import About from './About'
 import {
     Row, Col, Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, CardHeader, CardFooter
+    CardTitle, CardSubtitle, Button, CardHeader, CardFooter, Spinner
 } from 'reactstrap';
 
 
@@ -20,19 +20,20 @@ function Rig() {
     })
 }
 
-function onClickHandler() {
-    console.log("yuhyuhyuh");
-    console.log(list);
-    list.style.display ='none';
-}
-// cream -> '#F9F4F4'
 
 document.body.style.background = '#E1E1E5';
 var list = document.getElementsByClassName('testCard')[0];
 
 function Loader() {
     const { progress } = useProgress()
-    return <Html center>{progress} % loaded</Html>
+    return <Html center>
+        <div>
+            <h1> Welcome to my portfolio. </h1>
+            <p> The page is currently loading: <b> {progress} % loaded</b> </p>
+            <Spinner type="grow" color="warning"/>
+        </div>
+        
+    </Html>
 }
 
 
@@ -62,7 +63,7 @@ export class Home extends Component {
             .then(data => {
                 this.setState({ aboutCards: data, isLoading: false });
                // console.log(data);
-                console.log(this.state);
+               // console.log(this.state);
             })
         this.handleResize();
         window.addEventListener("resize", this.handleResize);
@@ -82,7 +83,7 @@ export class Home extends Component {
     
 
     handleShow = (name) => {
-     console.log("Click Event received " + name);
+    //console.log("Click Event received " + name);
     var toggle = null;
     switch (name) {
         case 'math':
@@ -108,7 +109,7 @@ export class Home extends Component {
             toggle = this.state.OtakuActive ? false : true;
            // console.log("Toggle Value: " + this.state.OtakuActive);
             this.setState({ OtakuActive: toggle });
-            console.log("After Toggle: " + this.state.OtakuActive);
+           // console.log("After Toggle: " + this.state.OtakuActive);
             break;
         case 'human':
             toggle = this.state.HumanActive ? false : true;
