@@ -1,5 +1,6 @@
 import * as THREE from "three"
-import React, { Component, Suspense, useRef, useState, Fragment } from 'react';
+import React, { Component, Suspense, useRef, useState, Fragment, useEffect } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF, useAnimations, Text, Text3D, Html, useProgress } from '@react-three/drei'
 import { Model } from './Magic_furball'
@@ -15,6 +16,7 @@ function Rig() {
     return useFrame((state) => {
         state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, 1 + state.mouse.x / 4, 0.075)
         state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, 1.5 + state.mouse.y / 4, 0.075)
+
     })
 }
 
@@ -33,6 +35,7 @@ function Loader() {
     return <Html center>{progress} % loaded</Html>
 }
 
+
 export class Home extends Component {
 
     constructor(props) {
@@ -44,48 +47,66 @@ export class Home extends Component {
             DevActive: false,
             TutorActive: false,
             OtakuActive: false,
-            HumanActive: false
-        }
+            HumanActive: false,
+            fov: 115,
+            zHTML: 0
+        };
+        this.handleResize = this.handleResize.bind(this);
     }
+
+
 
     componentDidMount() {
         fetch('/api/about')
             .then(response => response.json())
             .then(data => {
                 this.setState({ aboutCards: data, isLoading: false });
-                console.log(data);
-                console.log(this.state.aboutCards);
+               // console.log(data);
+                console.log(this.state);
             })
-        
+        this.handleResize();
+        window.addEventListener("resize", this.handleResize);
     }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.handleResize);
+    }
+
+    handleResize() {
+        const mobile = window.matchMedia("(max-width: 767px)").matches;
+        this.setState({ fov: mobile ? 145 : 115 });
+        this.setState({ zHTML: mobile ? 2 : 0 });
+    }
+
+
     
 
     handleShow = (name) => {
-    console.log("Click Event received " + name);
+     console.log("Click Event received " + name);
     var toggle = null;
     switch (name) {
         case 'math':
-            console.log("Current State: " + this.state.MathActive);
+           // console.log("Current State: " + this.state.MathActive);
             toggle = this.state.MathActive ? false : true;
-            console.log("Toggle value: " + toggle);
+           // console.log("Toggle value: " + toggle);
             this.setState({ MathActive: toggle });
-            console.log("After toggle: " + this.state.MathActive);
+           // console.log("After toggle: " + this.state.MathActive);
             break;
         case 'dev':
-            console.log("Current State: " + this.state.DevActive);
+           // console.log("Current State: " + this.state.DevActive);
             toggle = this.state.DevActive ? false : true;
-            console.log("Toggle Value: " + this.state.DevActive);
+           // console.log("Toggle Value: " + this.state.DevActive);
             this.setState({ DevActive: toggle });
-            console.log("After Toggle: " + this.state.DevActive);
+           // console.log("After Toggle: " + this.state.DevActive);
             break;
         case 'tutor':
             toggle = this.state.TutorActive ? false : true;
             this.setState({ TutorActive: toggle });
             break;
         case 'otaku':
-            console.log("Current State: " + this.state.OtakuActive);
+           // console.log("Current State: " + this.state.OtakuActive);
             toggle = this.state.OtakuActive ? false : true;
-            console.log("Toggle Value: " + this.state.OtakuActive);
+           // console.log("Toggle Value: " + this.state.OtakuActive);
             this.setState({ OtakuActive: toggle });
             console.log("After Toggle: " + this.state.OtakuActive);
             break;
@@ -95,18 +116,21 @@ export class Home extends Component {
             break;
     }
 
-}
-  
-  
+    }
+
     render() {
         //console.log(this.state.aboutCards);
+        // original pvo: 115
+        
+        //const { Fov } = this.state.fov; -> returning undefined at the time of canvas render
         if (this.state.isLoading) {
             return (<div className="spinner-border image-center" style={{ width: '5rem', height: '5rem' }}> </div>);
+            
         } else {
             return (
                 <div style={{ height: "100vh" }} >
 
-                    <Canvas shadows camera={{ position: [0, 0, 4], fov: 115 }}>
+                    <Canvas shadows camera={{ position: [0, 0, 3], fov: this.state.fov  }} > 
                         <Suspense fallback={<Loader />}>
                             <ambientLight intensity={1} />
                             <directionalLight position={[-5, 5, 5]} castShadow shadow-mapSize={1024} />
@@ -159,31 +183,32 @@ export class Home extends Component {
                                 Deanta Pittman
                                 <meshNormalMaterial />
                             </Text3D>
-
+                            
                             <React.Fragment >
                                 <Html
-                                    position={[-7, -4.5, 0]}
-                                    style={{ position: 'fixed', bottom: '0' }}
-
-
+                                    position={[-3, 9, this.zHTML]} //have z vary on media state. fov=145 -> z=2 original z = 0
+                                    style={{ position: 'fixed'}}
+                                    
+                                    //Need to add button to About obj on click close
                                 >
+                                    
                                     {this.state.MathActive ?
-                                        <About key={this.state.aboutCards[0].id} about={this.state.aboutCards[0]} />
+                                        <About key={this.state.aboutCards[0].id} about={this.state.aboutCards[0]} buttonClick={() => this.handleShow('math')} /> 
                                         : null}
 
                                     {this.state.DevActive ?
-                                        <About key={this.state.aboutCards[1].id} about={this.state.aboutCards[1]} />
+                                        <About key={this.state.aboutCards[1].id} about={this.state.aboutCards[1]} buttonClick={() => this.handleShow('dev')} />
                                         : null}
 
                                     {this.state.TutorActive ?
-                                        <About key={this.state.aboutCards[2].id} about={this.state.aboutCards[2]} />
+                                        <About key={this.state.aboutCards[2].id} about={this.state.aboutCards[2]} buttonClick={() => this.handleShow('tutor')} />
                                         : null}
                                     {this.state.OtakuActive ?
-                                        <About key={this.state.aboutCards[3].id} about={this.state.aboutCards[3]} />
+                                        <About key={this.state.aboutCards[3].id} about={this.state.aboutCards[3]} buttonClick={() => this.handleShow('otaku')} />
                                         : null}
 
                                     {this.state.HumanActive ?
-                                        <About key={this.state.aboutCards[4].id} about={this.state.aboutCards[4]} />
+                                        <About key={this.state.aboutCards[4].id} about={this.state.aboutCards[4]} buttonClick={() => this.handleShow('human')} />
                                         : null}
                                 </Html>
                             </React.Fragment>
