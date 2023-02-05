@@ -29,6 +29,8 @@ function Project(props) {
     }
 
     const project = props.project;
+
+
     return (
         <Col md={4}>
             <Card>

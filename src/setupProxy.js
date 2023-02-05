@@ -3,7 +3,8 @@
 const context = [
     "/weatherforecast",
     "/api/project",
-    "/api/about"
+    "/api/about",
+    "/api/openAI"
 ];
 
 module.exports = function (app) {

@@ -70,7 +70,7 @@ export class Projects extends Component {
                     <div>
                         
                         <hr></hr>
-                        <Row>
+                        <Row >
                             {this.state.projects.map(project =>
                                 <Project key={project.id} project={project} />
                             )}

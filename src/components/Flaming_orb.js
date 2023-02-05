@@ -6,14 +6,15 @@ source: https://sketchfab.com/3d-models/flaming-orb-d7f8cda1e8ae4e458cd674bc18db
 title: Flaming orb
 */
 
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 
 export function Model(props) {
   const group = useRef()
     const { nodes, materials, animations } = useGLTF('./models/flaming_orb.glb')
     const { actions } = useAnimations(animations, group)
-    //console.log(actions);
+    useEffect(() => { actions.Animation.play(); });
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Sketchfab_Scene">

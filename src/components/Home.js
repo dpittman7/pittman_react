@@ -6,6 +6,7 @@ import { useGLTF, useAnimations, Text, Text3D, Html, useProgress } from '@react-
 import { Model } from './Flaming_orb.js'
 import fontUrl from '../images/Bebas_Neue_Regular.json'
 import About from './About'
+import AMA from './AMA'
 import {
     Row, Col, Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, CardHeader, CardFooter, Spinner
@@ -17,12 +18,14 @@ function Rig() {
         state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, 1 + state.mouse.x / 4, 0.075)
         state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, 1.5 + state.mouse.y / 4, 0.075)
 
+
     })
 }
 
 
-document.body.style.background = '#E1E1E5';
-var list = document.getElementsByClassName('testCard')[0];
+
+document.body.style.background = "linear-gradient(to right, #E1E1E5, #FFDAB9)"; // coolgrey: '#E1E1E5', peach: '#FFDAB9'
+//var list = document.getElementsByClassName('testCard')[0];
 
 function Loader() {
     const { progress } = useProgress()
@@ -37,6 +40,8 @@ function Loader() {
 }
 
 
+
+
 export class Home extends Component {
 
     constructor(props) {
@@ -49,11 +54,14 @@ export class Home extends Component {
             TutorActive: false,
             OtakuActive: false,
             HumanActive: false,
+            GPTActive: false,
             fov: 115,
-            zHTML: 0
+            camPosition: [0,0,5]
         };
         this.handleResize = this.handleResize.bind(this);
     }
+
+ 
 
 
 
@@ -115,9 +123,16 @@ export class Home extends Component {
             toggle = this.state.HumanActive ? false : true;
             this.setState({ HumanActive: toggle });
             break;
+        case 'gpt':
+            toggle = this.state.GPTActive ? false : true;
+            this.setState({ GPTActive: toggle });
+            break;
     }
 
     }
+
+    
+
 
     render() {
         //console.log(this.state.aboutCards);
@@ -129,13 +144,14 @@ export class Home extends Component {
             
         } else {
             return (
-                <div style={{ height: "100vh" }} >
+                <div style={{ height: "100vh"}}>
 
-                    <Canvas shadows camera={{ position: [0, 0, 3], fov: this.state.fov  }} > 
+                    <Canvas shadows camera={{ position: [0, 0, 3], fov: this.state.fov }}>
+                        
                         <Suspense fallback={<Loader />}>
                             <ambientLight intensity={1} />
                             <directionalLight position={[-5, 5, 5]} castShadow shadow-mapSize={1024} />
-                            <Model play='Animation' position={[1, 2.5, 0.5]} />
+                            <Model play='Animation' position={[1, 2.5, 0.5]} onClick={() => this.handleShow('gpt')} />
                             <Text
 
                                 color="black" // default
@@ -146,55 +162,17 @@ export class Home extends Component {
                                 !
                             </Text>
 
-
-                            <Text3D font={fontUrl} position={[-5.5, 8, -4]}
-                                rotation={[1, .5, 0]} onClick={() => this.handleShow('math')}                 >
-                                Math Guy
-                                <meshNormalMaterial />
-                            </Text3D>
-
-                            <Text3D font={fontUrl} position={[-6.5, 4.2, -4.5]}
-                                onClick={() => this.handleShow('tutor')}
-                            >
-                                Tutor
-                                <meshNormalMaterial />
-                            </Text3D>
-
-                            <Text3D font={fontUrl} position={[6, 4.2, -4.5]}
-                                onClick={() => this.handleShow('otaku')}
-                            >
-                                Otaku
-                                <meshNormalMaterial />
-                            </Text3D>
-
-                            <Text3D font={fontUrl} position={[3.5, 8.5, -4]}
-                                rotation={[1, -.5, 0]} onClick={() => this.handleShow('dev')}>
-                                Developer
-                                <meshNormalMaterial />
-                            </Text3D>
-
-                            <Text3D font={fontUrl} position={[-.7, -1, -4]}
-                                onClick={() => this.handleShow('human')}>
-                                Human
-                                <meshNormalMaterial />
-                            </Text3D>
-
-                            <Text3D font={fontUrl} position={[-2.5, -2.2, -1]}
-                                rotation={[-1, 0, 0]}>
-                                Deanta Pittman
-                                <meshNormalMaterial />
-                            </Text3D>
                             
-                            <React.Fragment >
+                            <React.Fragment>
                                 <Html
-                                    position={[-3, 9, this.zHTML]} //have z vary on media state. fov=145 -> z=2 original z = 0
-                                    style={{ position: 'fixed'}}
-                                    
-                                    //Need to add button to About obj on click close
+                                    // position={[3, 9, this.zHTML]} //have z vary on media state. fov=145 -> z=2 original z = 0
+                                    style={{ position: 'fixed', zIndex: 100000 }}
+                                    center
+                                    //zIndexRange={[100000]}
+                                    //occlude
                                 >
-                                    
                                     {this.state.MathActive ?
-                                        <About key={this.state.aboutCards[0].id} about={this.state.aboutCards[0]} buttonClick={() => this.handleShow('math')} /> 
+                                        <About key={this.state.aboutCards[0].id} about={this.state.aboutCards[0]} buttonClick={() => this.handleShow('math')} />
                                         : null}
 
                                     {this.state.DevActive ?
@@ -211,8 +189,54 @@ export class Home extends Component {
                                     {this.state.HumanActive ?
                                         <About key={this.state.aboutCards[4].id} about={this.state.aboutCards[4]} buttonClick={() => this.handleShow('human')} />
                                         : null}
+
+                                    {this.state.GPTActive ?
+                                        <AMA buttonClick={() => this.handleShow('gpt')} />
+                                        : null}
                                 </Html>
+                            
+
+                                <Text3D font={fontUrl} position={[-5.5, 8, -4]}
+                                    rotation={[1, .5, 0]} onClick={() => this.handleShow('math')} >
+                                    Math Guy
+                                    <meshNormalMaterial />
+                                </Text3D>
+
+                                <Text3D font={fontUrl} position={[-6.5, 4.2, -4.5]}
+                                    onClick={() => this.handleShow('tutor')}
+                                >
+                                    Tutor
+                                    <meshNormalMaterial />
+                                </Text3D>
+
+                                <Text3D font={fontUrl} position={[6, 4.2, -4.5]}
+                                    onClick={() => this.handleShow('otaku')}
+                                >
+                                    Otaku
+                                    <meshNormalMaterial />
+                                </Text3D>
+
+                                <Text3D font={fontUrl} position={[3.5, 8.5, -4]}
+                                    rotation={[1, -.5, 0]} onClick={() => this.handleShow('dev')}>
+                                    Developer
+                                    <meshNormalMaterial />
+                                </Text3D>
+
+                                <Text3D font={fontUrl} position={[-.7, -1, -4]}
+                                    onClick={() => this.handleShow('human')}>
+                                    Human
+                                    <meshNormalMaterial />
+                                </Text3D>
+
+                                <Text3D font={fontUrl} position={[-2.5, -2.2, -1]}
+                                    rotation={[-1, 0, 0]} >
+                                    
+                                    Deanta Pittman
+                                    <meshNormalMaterial />
+                                </Text3D>
                             </React.Fragment>
+                            
+
                             <Rig />
                         </Suspense>
                     </Canvas>
