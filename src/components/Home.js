@@ -7,6 +7,7 @@ import { Model } from './Flaming_orb.js'
 import fontUrl from '../images/Bebas_Neue_Regular.json'
 import About from './About'
 import AMA from './AMA'
+import Contact from './Contact'
 import {
     Row, Col, Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, CardHeader, CardFooter, Spinner
@@ -55,6 +56,7 @@ export class Home extends Component {
             OtakuActive: false,
             HumanActive: false,
             GPTActive: false,
+            ContactActive: false,
             fov: 115,
             camPosition: [0,0,5]
         };
@@ -127,6 +129,10 @@ export class Home extends Component {
             toggle = this.state.GPTActive ? false : true;
             this.setState({ GPTActive: toggle });
             break;
+        case 'contact':
+            toggle = this.state.ContactActive ? false : true;
+            this.setState({ ContactActive: toggle });
+            break;
     }
 
     }
@@ -193,6 +199,9 @@ export class Home extends Component {
                                     {this.state.GPTActive ?
                                         <AMA buttonClick={() => this.handleShow('gpt')} />
                                         : null}
+                                    {this.state.ContactActive ?
+                                        <Contact buttonClick={() => this.handleShow('contact')} />
+                                        : null}
                                 </Html>
                             
 
@@ -229,7 +238,9 @@ export class Home extends Component {
                                 </Text3D>
 
                                 <Text3D font={fontUrl} position={[-2.5, -2.2, -1]}
-                                    rotation={[-1, 0, 0]} >
+                                    rotation={[-1, 0, 0]}
+                                    onClick={() => this.handleShow('contact')}
+                                >
                                     
                                     Deanta Pittman
                                     <meshNormalMaterial />
