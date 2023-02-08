@@ -26,7 +26,7 @@ export class Resume extends Component {
         return (
             <div>
                 <Document file={DPResume}>
-                    <Page pageNumber={1} renderTextLayer={false} scale={this.scale} />
+                    <Page pageNumber={1} renderTextLayer={false} scale={this.state.scale} />
                 </Document>
             </div>
                         
