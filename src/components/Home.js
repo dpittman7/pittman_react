@@ -58,7 +58,8 @@ export class Home extends Component {
             GPTActive: false,
             ContactActive: false,
             fov: 115,
-            camPosition: [0,0,5]
+            camPosition: [0, 0, 5],
+            zHTML: 0
         };
         this.handleResize = this.handleResize.bind(this);
     }
@@ -86,7 +87,7 @@ export class Home extends Component {
     handleResize() {
         const mobile = window.matchMedia("(max-width: 767px)").matches;
         this.setState({ fov: mobile ? 145 : 115 });
-        this.setState({ zHTML: mobile ? 2 : 0 });
+        this.setState({ zHTML: mobile ? 0 : 0 });
     }
 
 
@@ -171,7 +172,7 @@ export class Home extends Component {
                             
                             <React.Fragment>
                                 <Html
-                                    // position={[3, 9, this.zHTML]} //have z vary on media state. fov=145 -> z=2 original z = 0
+                                    position={[0, 2, -3]} //have z vary on media state. fov=145 -> z=2 original z = 0
                                     style={{ position: 'fixed', zIndex: 100000 }}
                                     center
                                     //zIndexRange={[100000]}
