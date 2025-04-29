@@ -1,50 +1,63 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
-    Row, Col, Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, CardHeader, CardFooter
+  Card, CardImg, CardBody, CardText,
+  CardHeader, CardFooter
 } from 'reactstrap';
+import './Project.css'; 
 
-
-function Project(props) {
-
-    function getProjectLink(project) {
-        if (project.hasWebLink) {
-            return <a className="project-links" href={project.webUrl} target="_blank">
-                <i className="fas fa-external-link-alt fa-lg"></i>
-            </a>
-        }
-        if (project.hasDownloadLink) {
-            return <a className="project-links" target="_blank">
-                <i className=" fas fa-download fa-lg"></i>
-            </a>
-        }
+function Project({ project }) {
+  const getProjectLink = () => {
+    if (project.hasWebLink) {
+      return (
+        <a className="project-links" href={project.webUrl} target="_blank" rel="noreferrer">
+          <i className="fas fa-external-link-alt fa-lg" />
+        </a>
+      );
     }
-
-    function getGithubLink(project) {
-        if (project.hasGithubLink) {
-            return <a className="project-links" href={"https://github.com/" + project.githubUrl} title="view source code" alt="view source code" target="_blank">
-                <i className="fab fa-github fa-lg"></i>
-            </a>
-        }
+    if (project.hasDownloadLink) {
+      return (
+        <a className="project-links" download>
+          <i className="fas fa-download fa-lg" />
+        </a>
+      );
     }
+  };
 
-    const project = props.project;
+  const getGithubLink = () => {
+    if (project.hasGithubLink) {
+      return (
+        <a
+          className="project-links"
+          href={`https://github.com/${project.githubUrl}`}
+          title="view source code"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <i className="fab fa-github fa-lg" />
+        </a>
+      );
+    }
+  };
 
-
-    return (
-        <Col md={4}>
-            <Card>
-                <CardHeader tag="h2">{project.title}</CardHeader>
-                <CardImg top width="50%" className="project-image" src={require('../images/projects/' + project.image)} alt="Card image cap" />
-                <CardBody> 
-                    <CardText>{project.description}</CardText>
-                    {getGithubLink(project)}
-                    {getProjectLink(project)}
-                </CardBody>
-                <CardFooter tag="h5">{project.stack}</CardFooter>
-            </Card>
-        </Col>
-    );
+  return (
+    <Card className="project-card">
+      <CardHeader tag="h2">{project.title}</CardHeader>
+      <CardImg
+        top
+        className="project-image"
+        src={require(`../images/projects/${project.image}`)}
+        alt={project.title}
+      />
+      <CardBody>
+        <CardText>{project.description}</CardText>
+        <div className="link-row">
+          {getGithubLink()}
+          {getProjectLink()}
+        </div>
+      </CardBody>
+      <CardFooter tag="h5">{project.stack}</CardFooter>
+    </Card>
+  );
 }
 
 export default Project;

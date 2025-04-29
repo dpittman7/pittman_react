@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { useMediaQuery } from 'react-responsive';
-import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack'
+import { Document, Page, pdfjs } from 'react-pdf'
 import DPResume from '../images/resume/PittmanDeanta_Resume_Jan2023.pdf'
 
 const url = `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`

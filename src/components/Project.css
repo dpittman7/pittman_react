@@ -1,0 +1,56 @@
+/* Projects.css */
+
+/* Base layout */
+.projects-page {
+    --hero-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* 3D hero container */
+  .hero-3d {
+    width: 100%;
+    height: var(--hero-height);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-3d canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+  
+  /* PROJECTS header */
+  .projects-title {
+    /* Pull up to sit right under the case */
+    margin: -8vh 0 3rem;
+    position: relative;
+    z-index: 2;                         /* above the slides */
+    width: 100%;
+    text-align: center;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    color: #333;
+  }
+  
+  /* Carousel wrapper */
+  .carousel-container {
+    width: 100%;
+    align-self: stretch;                /* full width, despite parent centering */
+    /* only overlap the bottom of the case, not the header */
+    margin-top: -10vh;                  /* ↓ tweak this if you still see overlap */
+    padding: 2rem 0;
+    position: relative;
+    z-index: 1;                         /* slides sit behind the header */
+  }
+  
+  /* Swiper tweaks */
+  .projects-swiper {
+    width: 100%;
+    padding-bottom: 2rem;
+  }
+  .projects-swiper .swiper-slide {
+    display: flex;
+    justify-content: center;
+  }
+  
