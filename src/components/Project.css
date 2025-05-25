@@ -37,8 +37,6 @@
   .carousel-container {
     width: 100%;
     align-self: stretch;                /* full width, despite parent centering */
-    /* only overlap the bottom of the case, not the header */
-    margin-top: -10vh;                  /* ↓ tweak this if you still see overlap */
     padding: 2rem 0;
     position: relative;
     z-index: 1;                         /* slides sit behind the header */

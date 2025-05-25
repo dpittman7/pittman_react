@@ -42,12 +42,6 @@ function Project({ project }) {
   return (
     <Card className="project-card">
       <CardHeader tag="h2">{project.title}</CardHeader>
-      <CardImg
-        top
-        className="project-image"
-        src={require(`../images/projects/${project.image}`)}
-        alt={project.title}
-      />
       <CardBody>
         <CardText>{project.description}</CardText>
         <div className="link-row">

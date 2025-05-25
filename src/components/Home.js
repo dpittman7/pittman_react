@@ -4,6 +4,7 @@ import { useMediaQuery } from 'react-responsive';
 import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF, useAnimations, Text, Text3D, Html, useProgress } from '@react-three/drei'
 import { Model } from './Flaming_orb.js'
+import { FrameModel } from './frame.js'
 import fontUrl from '../images/Bebas_Neue_Regular.json'
 import About from './About'
 import AMA from './AMA'

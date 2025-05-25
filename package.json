@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/react-pdf": "^5.0.5",
     "bootstrap": "^5.2.3",
+    "html2canvas": "^1.4.1",
     "http-proxy-middleware": "^2.0.6",
     "lerp": "^1.0.3",
     "react": "^18.3.1",
@@ -28,11 +29,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set HTTPS=true&&react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prestart": "node aspnetcore-https && node aspnetcore-react"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
