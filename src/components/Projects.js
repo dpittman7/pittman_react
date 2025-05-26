@@ -67,7 +67,9 @@ export class Projects extends Component {
     return (
       <div className="projects-page">
         <div className="hero-3d">
-          <Canvas shadows>
+          <Canvas shadows onCreated={({ gl }) => {
+              gl.domElement.tabIndex = 0;
+            }}>
             <PerspectiveCamera makeDefault fov={50} />
             <ambientLight intensity={1} />
             <directionalLight position={[5, 5, 5]} castShadow />
