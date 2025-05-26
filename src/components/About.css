@@ -1,0 +1,27 @@
+/* slide up from bottom */
+.about-portal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 60vh;
+  background: #fff;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  z-index: 9999;
+}
+.about-portal.visible {
+  transform: translateY(0);
+}
+/* return button in top‑right of panel */
+.about-portal__close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
